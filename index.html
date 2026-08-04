@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+  <html lang="es">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Seguimiento de Pago Wilfer</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a73e8">
+  <link rel="icon" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <style>
+    * { box-sizing: border-box; }
+  body { font-family: -apple-system, Roboto, Arial, sans-serif; margin:0; background:#f2f4f7; color:#1c1c1c; padding-bottom:40px; }
+    header { background:#1a73e8; color:white; padding:16px; text-align:center; }
+  header h1 { margin:0; font-size:18px; }
+  .card { background:white; border-radius:10px; margin:12px; padding:14px; box-shadow:0 1px 3px rgba(0,0,0,.12); }
+  .card h2 { margin:0 0 10px; font-size:15px; color:#1a73e8; }
+  label { display:block; font-size:12px; color:#555; margin-top:8px; }
+  input { width:100%; padding:8px; font-size:15px; border:1px solid #ccc; border-radius:6px; margin-top:3px; }
+  button { border:none; border-radius:6px; padding:10px 14px; font-size:14px; font-weight:bold; cursor:pointer; margin-top:10px; }
+  .btn-primary { background:#1a73e8; color:white; width:100%; }
+  .btn-danger { background:#e53935; color:white; padding:6px 10px; font-size:12px; }
+      .row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #eee; font-size:14px; }
+  .row:last-child { border-bottom:none; }
+  .neg { color:#e53935; font-weight:bold; }
+  .pos { color:#1a9c4c; font-weight:bold; }
+  .period-header { font-weight:bold; font-size:14px; }
+  .small { font-size:12px; color:#777; }
+      .total-box { display:flex; justify-content:space-between; font-weight:bold; margin-top:6px; padding-top:6px; border-top:2px solid #1a73e8; }
+  details summary { cursor:pointer; font-size:13px; color:#1a73e8; margin-top:6px; }
+</style>
+  </head>
+<body>
+  <header><h1>Seguimiento de Pago Wilfer</h1></header>
+
+    <div class="card">
+      <h2>Registrar pago</h2>
+    <label>Fecha del pago</label>
+  <input type="date" id="pagoFecha">
+      <label>Monto</label>
+    <input type="number" id="pagoMonto" placeholder="Ej: 500000">
+      <button class="btn-primary" onclick="agregarPago()">Agregar pago</button>
+  </div>
+
+    <div class="card">
+  <h2>Configuracion</h2>
+  <label>Fecha de inicio del primer periodo</label>
+    <input type="date" id="cfgInicio">
+  <label>Pago objetivo por periodo</label>
+  <input type="number" id="cfgObjetivo">
+  <label>Numero de periodos (meses)</label>
+  <input type="number" id="cfgNumPeriodos" min="1">
+    <button class="btn-primary" onclick="guardarConfig()">Guardar configuracion</button>
+  </div>
+
+  <div class="card">
+      <h2>Resumen por periodo</h2>
+  <div id="tablaPeriodos"></div>
+  <div class="total-box"><span>Total general</span><span id="totalGeneral"></span></div>
+</div>
+
+<div class="card">
+    <h2>Historial de pagos</h2>
+          <div id="listaPagos"></div>
+</div>
+
+<script>
+const KEY = 'seguimientoPagoWilfer_v1';
+
+function cargar(){
+  const data = JSON.parse(localStorage.getItem(KEY) || 'null');
+          return data || {
+    config: { inicio: '2026-07-21', objetivo: 2508000, numPeriodos: 5 },
+      pagos: []
+};
+}
+function guardar(data){ localStorage.setItem(KEY, JSON.stringify(data)); }
+
+    let estado = cargar();
+
+  function money(n){
+  const neg = n < 0;
+  const val = Math.abs(Math.round(n)).toLocaleString('es-CO');
+  return (neg ? '-$ ' : '$ ') + val;
+  }
+
+function addMonths(date, n){
+  const d = new Date(date);
+  d.setMonth(d.getMonth() + n);
+  return d;
+  }
+
+  function generarPeriodos(){
+  const base = new Date(estado.config.inicio + 'T00:00:00');
+  const periodos = [];
+    for(let i=0; i<estado.config.numPeriodos; i++){
+    periodos.push({
+              inicio: addMonths(base, i),
+          fin: addMonths(base, i+1),
+      objetivo: estado.config.objetivo,
+          totalPagado: 0
+});
+}
+      return periodos;
+  }
+
+function calcular(){
+    const periodos = generarPeriodos();
+  estado.pagos.forEach(p=>{
+    const fecha = new Date(p.fecha + 'T00:00:00');
+        const periodo = periodos.find(per => fecha >= per.inicio && fecha < per.fin);
+    if(periodo) periodo.totalPagado += Number(p.monto);
+});
+  let acumulado = 0;
+  periodos.forEach(per=>{
+        per.desface = per.totalPagado - per.objetivo;
+    acumulado += per.desface;
+    per.desfaceAc = acumulado;
+});
+  return periodos;
+}
+
+function fmtFecha(d){
+    return d.toLocaleDateString('es-CO', { day:'2-digit', month:'short', year:'2-digit' });
+}
+
+function render(){
+    document.getElementById('cfgInicio').value = estado.config.inicio;
+  document.getElementById('cfgObjetivo').value = estado.config.objetivo;
+  document.getElementById('cfgNumPeriodos').value = estado.config.numPeriodos;
+
+  const periodos = calcular();
+  let totalPagadoGen = 0, totalObjetivoGen = 0;
+  let html = '';
+  periodos.forEach(per=>{
+        totalPagadoGen += per.totalPagado;
+        totalObjetivoGen += per.objetivo;
+    html += '<div class="period-header">' + fmtFecha(per.inicio) + ' - ' + fmtFecha(per.fin) + '</div>' +
+            '<div class="row"><span class="small">Pagado</span><span>' + money(per.totalPagado) + '</span></div>' +
+            '<div class="row"><span class="small">Objetivo</span><span>' + money(per.objetivo) + '</span></div>' +
+            '<div class="row"><span class="small">Desface</span><span class="' + (per.desface<0?'neg':'pos') + '">' + money(per.desface) + '</span></div>' +
+            '<div class="row"><span class="small">Desface acumulado</span><span class="' + (per.desfaceAc<0?'neg':'pos') + '">' + money(per.desfaceAc) + '</span></div>';
+});
+  document.getElementById('tablaPeriodos').innerHTML = html;
+  document.getElementById('totalGeneral').textContent = money(totalPagadoGen) + ' / ' + money(totalObjetivoGen);
+
+  let listaHtml = '';
+  estado.pagos.slice().sort((a,b)=> a.fecha.localeCompare(b.fecha)).forEach(p=>{
+        listaHtml += '<div class="row"><span>' + p.fecha + ' - ' + money(Number(p.monto)) + '</span>' +
+          '<button class="btn-danger" onclick="borrarPago(\'' + p.id + '\')">Eliminar</button></div>';
+    });
+      document.getElementById('listaPagos').innerHTML = listaHtml || '<span class="small">Sin pagos registrados</span>';
+}
+
+function agregarPago(){
+    const fecha = document.getElementById('pagoFecha').value;
+  const monto = document.getElementById('pagoMonto').value;
+  if(!fecha || !monto) { alert('Completa fecha y monto'); return; }
+  estado.pagos.push({ id: Date.now().toString(), fecha, monto });
+  guardar(estado);
+  document.getElementById('pagoMonto').value = '';
+      render();
+}
+
+function borrarPago(id){
+    estado.pagos = estado.pagos.filter(p=>p.id!==id);
+  guardar(estado);
+  render();
+}
+
+function guardarConfig(){
+    estado.config.inicio = document.getElementById('cfgInicio').value;
+  estado.config.objetivo = Number(document.getElementById('cfgObjetivo').value);
+  estado.config.numPeriodos = Number(document.getElementById('cfgNumPeriodos').value);
+  guardar(estado);
+  render();
+}
+
+render();
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=> navigator.serviceWorker.register('sw.js'));
+}
+</script>
+  </body>
+  </html>
+  
