@@ -1,0 +1,156 @@
+.panel {
+  margin-top: 8px;
+}
+
+.summary {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary::before {
+  content: '▸ ';
+}
+
+.panel[open] .summary::before {
+  content: '▾ ';
+}
+
+.list {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+
+.icon {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  background: #e8f0fe;
+  border-radius: 7px;
+}
+
+.iconPdf {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.size {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.link {
+  flex: none;
+  padding: 4px 9px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  text-decoration: none;
+  background: rgba(26, 115, 232, 0.08);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.link:hover {
+  background: rgba(26, 115, 232, 0.16);
+}
+
+.remove {
+  flex: none;
+  padding: 4px 9px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid #f6c9c9;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.remove:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dropzone {
+  margin-top: 8px;
+}
+
+.fileInput {
+  display: block;
+  width: 100%;
+  font-size: 11.5px;
+  color: var(--text-soft);
+}
+
+.fileInput::file-selector-button {
+  margin-right: 8px;
+  padding: 6px 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  background: rgba(26, 115, 232, 0.08);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.hint {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.error {
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--danger);
+}
+
+.badge {
+  margin-left: 6px;
+  padding: 2px 7px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--success);
+  background: var(--success-bg);
+  border-radius: 999px;
+}
+
+.badgeEmpty {
+  color: var(--warning);
+  background: var(--warning-bg);
+}

@@ -1,0 +1,218 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border-soft);
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.row:hover {
+  background: #f7f9fc;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowMain {
+  min-width: 0;
+  flex: 1;
+}
+
+.rowSelect {
+  margin-top: 6px;
+}
+
+.amount {
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.date {
+  margin-top: 1px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.note {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.pendingTag {
+  margin-left: 6px;
+  padding: 2px 7px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--warning);
+  background: var(--warning-bg);
+  border-radius: 999px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 140px;
+}
+
+.confirmText {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.error {
+  margin-top: 10px;
+  padding: 9px 11px;
+  font-size: 12.5px;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid #f6c9c9;
+  border-radius: var(--radius-sm);
+}
+
+.success {
+  margin-top: 10px;
+  padding: 9px 11px;
+  font-size: 12.5px;
+  color: var(--success);
+  background: var(--success-bg);
+  border: 1px solid #c4e7d1;
+  border-radius: var(--radius-sm);
+}
+
+/* ----------------------------------------------------- Cabecera y filtro --- */
+.cardMeta {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.cardFoot {
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-soft);
+}
+
+.filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.filter {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-soft);
+  background: #f3f5f9;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.filterActive {
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* ------------------------------------------------- Montos de un toque --- */
+.suggestions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.suggestionsLabel {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.suggestion {
+  padding: 5px 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  background: rgba(26, 115, 232, 0.09);
+  border: 1px solid rgba(26, 115, 232, 0.18);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.suggestion:hover {
+  background: rgba(26, 115, 232, 0.18);
+}
+
+/* ------------------------------------------------- Adjuntar comprobante --- */
+.attachBlock {
+  margin-top: 14px;
+  padding: 12px;
+  background: #f7f9fc;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.attachLabel {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+
+.fileInput {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--text-soft);
+}
+
+.fileInput::file-selector-button {
+  margin-right: 8px;
+  padding: 6px 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  background: rgba(26, 115, 232, 0.1);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.attachHint {
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.attachError {
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--danger);
+}

@@ -1,0 +1,29 @@
+.panel {
+  margin: 14px 0;
+  padding: 16px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.summary {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.panel[open] .summary {
+  margin-bottom: 8px;
+}
+
+.intro {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}

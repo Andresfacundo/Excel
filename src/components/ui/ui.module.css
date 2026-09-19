@@ -1,0 +1,383 @@
+/* Primitivas de interfaz compartidas por toda la app. */
+
+/* ---------------------------------------------------------------- Card --- */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  margin: 14px 0;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  font-size: 14.5px;
+  color: var(--text);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex: none;
+}
+
+/* -------------------------------------------------------------- Button --- */
+.button {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, opacity 0.2s;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.primary {
+  width: 100%;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 4px 10px rgba(26, 115, 232, 0.35);
+}
+
+.primary:hover:not(:disabled) {
+  box-shadow: 0 6px 16px rgba(26, 115, 232, 0.45);
+}
+
+.danger {
+  padding: 7px 12px;
+  margin-top: 0;
+  font-size: 12px;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid #f6c9c9;
+}
+
+.danger:hover:not(:disabled) {
+  background: #fadcdc;
+}
+
+.ghost {
+  margin-top: 0;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  background: rgba(26, 115, 232, 0.08);
+}
+
+.ghost:hover:not(:disabled) {
+  background: rgba(26, 115, 232, 0.16);
+}
+
+/* --------------------------------------------------------------- Field --- */
+.label {
+  display: block;
+  margin-top: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+
+.input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 11px 12px;
+  font-size: 15px;
+  background: #fbfbfd;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+}
+
+.inputInvalid {
+  border-color: var(--danger);
+}
+
+/* El `$` fijo dentro del campo de monto. */
+.prefixWrap {
+  position: relative;
+}
+
+.prefix {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.inputPrefixed {
+  padding-left: 27px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+.select {
+  appearance: none;
+  padding-right: 34px;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7280' d='M1 1.5 6 6.5l5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 11px;
+  cursor: pointer;
+}
+
+.selectCompact {
+  width: auto;
+  max-width: 190px;
+  margin-top: 0;
+  padding: 6px 28px 6px 9px;
+  font-size: 11.5px;
+  background-position: right 9px center;
+  background-size: 9px;
+}
+
+.textarea {
+  min-height: 74px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.hint {
+  margin-top: 5px;
+  font-size: 11.5px;
+  color: var(--danger);
+}
+
+.help {
+  margin-top: 5px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.counter {
+  float: right;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.counterOver {
+  color: var(--danger);
+}
+
+/* ---------------------------------------------------------------- Tabs --- */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 2px;
+  padding: 4px;
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 0 auto;
+  justify-content: center;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--text-soft);
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.tab:hover:not([aria-selected='true']) {
+  background: rgba(26, 115, 232, 0.08);
+}
+
+.tabActive {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 3px 8px rgba(26, 115, 232, 0.3);
+}
+
+.tabCount {
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-soft);
+  background: #e7e9ee;
+  border-radius: 999px;
+}
+
+.tabActive .tabCount {
+  color: var(--primary-dark);
+  background: #fff;
+}
+
+.tabCountAlert {
+  color: #fff;
+  background: var(--danger);
+}
+
+.tabActive .tabCountAlert {
+  color: var(--danger);
+  background: #fff;
+}
+
+/* --------------------------------------------------------------- Alert --- */
+.alert {
+  margin-top: 12px;
+  padding: 9px 11px;
+  font-size: 12.5px;
+  border-radius: var(--radius-sm);
+}
+
+.alertError {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid #f6c9c9;
+}
+
+.alertSuccess {
+  color: var(--success);
+  background: var(--success-bg);
+  border: 1px solid #c4e7d1;
+}
+
+.alertInfo {
+  color: #1f4f8f;
+  background: #e8f0fe;
+  border: 1px solid #c5d9f7;
+}
+
+.alertWarning {
+  color: var(--warning);
+  background: var(--warning-bg);
+  border: 1px solid #f5ddb8;
+}
+
+/* --------------------------------------------------------------- Badge --- */
+.badge {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badgeSuccess {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badgeWarning {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.badgeDanger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.badgeInfo {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+/* ---------------------------------------------------------- ProgressBar --- */
+.track {
+  height: 11px;
+  margin-top: 8px;
+  background: #e7e9ee;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fillSuccess {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.fillWarning {
+  background: linear-gradient(90deg, #fbbf24, #d97706);
+}
+
+.fillDanger {
+  background: linear-gradient(90deg, #f87171, #dc2626);
+}
+
+.fillInfo {
+  background: linear-gradient(90deg, #93c5fd, #3b82f6);
+}
+
+/* --------------------------------------------------------------- Empty --- */
+.empty {
+  padding: 14px 0;
+  font-size: 13px;
+  color: #9aa0a8;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------- Spinner --- */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(26, 115, 232, 0.25);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinnerCentered {
+  margin: 28px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
