@@ -72,7 +72,7 @@ export function PersonSettingsPanel({
       {saved && <Alert tone="success">Cambios guardados.</Alert>}
 
       <div className={styles.danger}>
-        <p className={styles.dangerTitle}>
+        <p className={styles.sectionTitle}>
           {person.archived ? 'Persona archivada' : 'Archivar'}
         </p>
         <p className={styles.dangerText}>

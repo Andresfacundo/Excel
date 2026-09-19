@@ -1,4 +1,4 @@
-import { formatPeriodRange } from '@/lib/format'
+import { formatCompactRange } from '@/lib/format'
 import type { SelectOption } from '@/components/ui/Select'
 import type { Period } from './domain'
 
@@ -7,7 +7,7 @@ export const UNASSIGNED = ''
 
 export const UNASSIGNED_OPTION: SelectOption = {
   value: UNASSIGNED,
-  label: 'Sin asignar (tapa lo mas atrasado)',
+  label: 'Sin asignar',
 }
 
 /** Nombre legible de un periodo: su etiqueta si tiene, o su posicion. */
@@ -21,7 +21,7 @@ export function buildPeriodOptions(periods: readonly Period[]): SelectOption[] {
     UNASSIGNED_OPTION,
     ...periods.map((period) => ({
       value: period.id,
-      label: `${periodName(period)} · ${formatPeriodRange(period.start, period.end)}`,
+      label: `${periodName(period)} · ${formatCompactRange(period.start, period.end)}`,
     })),
   ]
 }

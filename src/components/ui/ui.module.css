@@ -10,9 +10,11 @@
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
 }
 
 .cardTitle {
@@ -60,12 +62,15 @@
   box-shadow: 0 4px 10px rgba(26, 115, 232, 0.35);
 }
 
-.primary:hover:not(:disabled) {
-  box-shadow: 0 6px 16px rgba(26, 115, 232, 0.45);
+@media (hover: hover) {
+  .primary:hover:not(:disabled) {
+    box-shadow: 0 6px 16px rgba(26, 115, 232, 0.45);
+  }
 }
 
 .danger {
-  padding: 7px 12px;
+  min-height: 36px;
+  padding: 8px 13px;
   margin-top: 0;
   font-size: 12px;
   color: var(--danger);
@@ -73,21 +78,26 @@
   border: 1px solid #f6c9c9;
 }
 
-.danger:hover:not(:disabled) {
-  background: #fadcdc;
+@media (hover: hover) {
+  .danger:hover:not(:disabled) {
+    background: #fadcdc;
+  }
 }
 
 .ghost {
+  min-height: 36px;
   margin-top: 0;
-  padding: 7px 12px;
+  padding: 8px 13px;
   font-size: 12px;
   font-weight: 600;
   color: var(--primary-dark);
   background: rgba(26, 115, 232, 0.08);
 }
 
-.ghost:hover:not(:disabled) {
-  background: rgba(26, 115, 232, 0.16);
+@media (hover: hover) {
+  .ghost:hover:not(:disabled) {
+    background: rgba(26, 115, 232, 0.16);
+  }
 }
 
 /* --------------------------------------------------------------- Field --- */
@@ -154,11 +164,11 @@
 }
 
 .selectCompact {
-  width: auto;
-  max-width: 190px;
+  width: 100%;
+  max-width: 260px;
   margin-top: 0;
-  padding: 6px 28px 6px 9px;
-  font-size: 11.5px;
+  padding: 7px 28px 7px 10px;
+  font-size: 12px;
   background-position: right 9px center;
   background-size: 9px;
 }
@@ -228,14 +238,31 @@
   transition: background 0.18s, color 0.18s;
 }
 
-.tab:hover:not([aria-selected='true']) {
-  background: rgba(26, 115, 232, 0.08);
+@media (hover: hover) {
+  .tab:hover:not([aria-selected='true']) {
+    background: rgba(26, 115, 232, 0.08);
+  }
 }
 
 .tabActive {
   color: #fff;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   box-shadow: 0 3px 8px rgba(26, 115, 232, 0.3);
+}
+
+/* En celulares estrechos las cuatro pestanas se apretan hasta caber: tener que
+   deslizar para llegar a la ultima esconde media navegacion. */
+@media (max-width: 400px) {
+  .tab {
+    gap: 4px;
+    padding: 9px 9px;
+    font-size: 12px;
+  }
+
+  .tabCount {
+    padding: 1px 5px;
+    font-size: 10px;
+  }
 }
 
 .tabCount {

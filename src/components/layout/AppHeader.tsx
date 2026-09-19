@@ -38,6 +38,15 @@ function describeSync(
   return { text: 'Sin sincronizacion en vivo', tone: styles.offline }
 }
 
+/**
+ * Cabecera compacta.
+ *
+ * Antes ocupaba cinco lineas apiladas —volver, titulo, subtitulo, estado,
+ * correo y boton de salir— y en un celular eso se comia el 40% de la pantalla
+ * antes de mostrar un solo dato. Ahora la navegacion y la cuenta comparten una
+ * fila arriba, y el correo vive en el `title` del boton de salir: sigue
+ * disponible al mantenerlo pulsado, sin gastar una linea entera.
+ */
 export function AppHeader({
   title,
   subtitle,
@@ -52,11 +61,26 @@ export function AppHeader({
 
   return (
     <header className={styles.header}>
-      {showBack && (
-        <Link to="/" className={styles.back}>
-          &larr; Todas las personas
-        </Link>
-      )}
+      <div className={styles.topRow}>
+        {showBack ? (
+          <Link to="/" className={styles.back}>
+            &larr; Personas
+          </Link>
+        ) : (
+          <span aria-hidden="true" />
+        )}
+
+        {email && (
+          <button
+            type="button"
+            className={styles.signOut}
+            title={`Sesion de ${email}`}
+            onClick={onSignOut}
+          >
+            Salir
+          </button>
+        )}
+      </div>
 
       <h1 className={styles.title}>{title}</h1>
       <p className={styles.subtitle}>{subtitle}</p>
@@ -65,15 +89,6 @@ export function AppHeader({
         <span className={styles.statusDot} aria-hidden="true" />
         {text}
       </p>
-
-      {email && (
-        <>
-          <p className={styles.account}>{email}</p>
-          <button type="button" className={styles.signOut} onClick={onSignOut}>
-            Cerrar sesion
-          </button>
-        </>
-      )}
     </header>
   )
 }

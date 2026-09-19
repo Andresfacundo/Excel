@@ -183,24 +183,40 @@
   color: var(--text-soft);
 }
 
-.fileInput {
-  display: block;
-  width: 100%;
-  margin-top: 8px;
-  font-size: 11.5px;
-  color: var(--text-soft);
+.attachActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 9px;
 }
 
-.fileInput::file-selector-button {
-  margin-right: 8px;
-  padding: 6px 11px;
-  font-size: 11.5px;
+.attachButton,
+.attachClear {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 8px 14px;
+  font-size: 12.5px;
   font-weight: 600;
-  color: var(--primary-dark);
-  background: rgba(26, 115, 232, 0.1);
   border: none;
   border-radius: 999px;
   cursor: pointer;
+}
+
+.attachButton {
+  color: var(--primary-dark);
+  background: rgba(26, 115, 232, 0.1);
+}
+
+.attachClear {
+  color: var(--text-soft);
+  background: #eceef3;
+}
+
+/* El foco del teclado tiene que verse: el input real esta oculto. */
+.fileFocus:focus-visible + .attachActions .attachButton {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .attachHint {

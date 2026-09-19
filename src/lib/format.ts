@@ -37,6 +37,25 @@ export function formatPeriodRange(start: Date, end: Date): string {
   return `${formatPeriodDate(start)} - ${formatPeriodDate(end)}`
 }
 
+const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+
+/**
+ * Rango corto para donde el espacio manda: `21 jul - 21 ago 26`.
+ *
+ * `formatPeriodRange` pasa por `Intl`, que en es-CO mete "de" entre cada parte
+ * ("21 de jul de 26") y deja un rango de 31 caracteres. Dentro de un `<select>`
+ * en un celular eso se corta a media fecha, asi que aqui se arma a mano. El
+ * ano solo se repite cuando el periodo cruza de un ano al siguiente.
+ */
+export function formatCompactRange(start: Date, end: Date): string {
+  const day = (date: Date) => `${date.getDate()} ${MESES[date.getMonth()] ?? ''}`
+  const year = (date: Date) => String(date.getFullYear()).slice(2)
+
+  return start.getFullYear() === end.getFullYear()
+    ? `${day(start)} - ${day(end)} ${year(end)}`
+    : `${day(start)} ${year(start)} - ${day(end)} ${year(end)}`
+}
+
 /** Fecha de hoy como `YYYY-MM-DD` en la zona horaria local. */
 export function todayIso(): string {
   const now = new Date()

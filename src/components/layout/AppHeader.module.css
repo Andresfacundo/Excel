@@ -1,47 +1,63 @@
 .header {
-  padding: calc(22px + env(safe-area-inset-top)) 16px 26px;
+  padding: calc(10px + env(safe-area-inset-top)) 14px 16px;
   color: #fff;
   text-align: center;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  border-radius: 0 0 24px 24px;
+  border-radius: 0 0 22px 22px;
   box-shadow: var(--shadow);
 }
 
-.back {
-  display: inline-block;
-  margin-bottom: 10px;
-  padding: 5px 12px;
+/* Navegacion y cuenta comparten fila: dos cosas que antes gastaban dos lineas
+   cada una y que casi nunca se usan. */
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 28px;
+  margin-bottom: 6px;
+}
+
+.back,
+.signOut {
+  padding: 6px 12px;
   font-size: 12px;
   font-weight: 600;
   color: #fff;
   text-decoration: none;
+  white-space: nowrap;
   background: rgba(255, 255, 255, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 999px;
+  cursor: pointer;
 }
 
-.back:hover {
-  background: rgba(255, 255, 255, 0.28);
+@media (hover: hover) {
+  .back:hover,
+  .signOut:hover {
+    background: rgba(255, 255, 255, 0.28);
+  }
 }
 
 .title {
   margin: 0;
-  font-size: 19px;
+  font-size: 20px;
   letter-spacing: 0.2px;
   overflow-wrap: anywhere;
 }
 
 .subtitle {
-  margin: 4px 0 0;
+  margin: 3px 0 0;
   font-size: 12.5px;
   opacity: 0.85;
+  overflow-wrap: anywhere;
 }
 
 .status {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 7px;
   font-size: 11px;
   opacity: 0.9;
 }
@@ -66,24 +82,13 @@
   color: #ffe9b0;
 }
 
-.signOut {
-  margin-top: 10px;
-  padding: 6px 12px;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 999px;
-  cursor: pointer;
-}
+/* En pantallas mas anchas sobra el espacio, asi que el titulo respira. */
+@media (min-width: 560px) {
+  .header {
+    padding: calc(16px + env(safe-area-inset-top)) 16px 22px;
+  }
 
-.signOut:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
-
-.account {
-  margin-top: 6px;
-  font-size: 11px;
-  opacity: 0.75;
+  .title {
+    font-size: 24px;
+  }
 }

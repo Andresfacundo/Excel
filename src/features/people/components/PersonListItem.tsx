@@ -43,15 +43,21 @@ export function PersonListItem({ person, tracking }: PersonListItemProps) {
               de {money(tracking.totalTarget)}
             </span>
           </span>
+          {/* El color sigue al signo de la cifra que se pinta, no al estado
+              general: un saldo en contra en verde se lee como buena noticia. */}
           <span
             className={cx(
               styles.itemDrift,
-              tracking.overdueAmount > 0 ? styles.negative : styles.positive,
+              tracking.overdueAmount > 0 || tracking.totalDrift < 0
+                ? styles.negative
+                : styles.positive,
             )}
           >
             {tracking.overdueAmount > 0
               ? `${money(tracking.overdueAmount)} vencido`
-              : money(tracking.totalDrift)}
+              : tracking.totalDrift < 0
+                ? `${money(Math.abs(tracking.totalDrift))} por debajo`
+                : money(tracking.totalDrift)}
           </span>
         </div>
       </Link>

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import type { SelectOption } from '@/components/ui/Select'
 import { cx } from '@/lib/cx'
-import { formatPeriodRange, money } from '@/lib/format'
+import { formatCompactRange, money } from '@/lib/format'
 import { PaymentList } from '@/features/payments/components/PaymentList'
 import { PeriodForm } from '@/features/periods/components/PeriodForm'
 import { useDeletePeriod, useUpdatePeriod } from '@/features/periods/hooks'
@@ -50,7 +50,7 @@ export function PeriodCard({
   const { updatePeriod } = useUpdatePeriod(userId)
   const { deletePeriod } = useDeletePeriod(userId)
 
-  const rangeLabel = formatPeriodRange(period.start, period.end)
+  const rangeLabel = formatCompactRange(period.start, period.end)
   const paymentCount = period.payments.length
 
   // El desglose solo aparece cuando hay algo que explicar. En el caso normal

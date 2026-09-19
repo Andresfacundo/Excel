@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { Alert } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
@@ -47,6 +47,7 @@ export function PaymentForm({ userId, person, periods, definitions }: PaymentFor
 
   // Los archivos viven fuera de `useForm`: un File no es un valor de texto y no
   // se puede persistir en la cache, asi que se suben aparte tras crear el pago.
+  const fileInputId = useId()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [files, setFiles] = useState<File[]>([])
   const [fileError, setFileError] = useState<string | null>(null)
@@ -237,15 +238,30 @@ export function PaymentForm({ userId, person, periods, definitions }: PaymentFor
 
         <div className={styles.attachBlock}>
           <span className={styles.attachLabel}>Comprobante de pago (opcional)</span>
+
+          {/* El control nativo rotula sus botones en el idioma del navegador
+              ("Choose Files / No file chosen"). Se oculta y se gobierna desde
+              esta etiqueta, que ademas da un area comoda para el dedo. */}
           <input
+            id={fileInputId}
             ref={fileInputRef}
             type="file"
             multiple
-            className={styles.fileInput}
+            className={`visually-hidden ${styles.fileFocus}`}
             accept={RECEIPT_MIME_TYPES.join(',')}
-            aria-label="Adjuntar comprobantes al pago"
             onChange={handleFiles}
           />
+          <div className={styles.attachActions}>
+            <label htmlFor={fileInputId} className={styles.attachButton}>
+              {files.length > 0 ? 'Cambiar archivos' : 'Elegir archivos'}
+            </label>
+            {files.length > 0 && (
+              <button type="button" className={styles.attachClear} onClick={clearFiles}>
+                Quitar
+              </button>
+            )}
+          </div>
+
           <p className={styles.attachHint}>
             {files.length > 0
               ? `${files.length} archivo(s): ${files.map((file) => file.name).join(', ')}`

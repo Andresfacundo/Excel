@@ -23,7 +23,7 @@ aplicacion React con TypeScript estricto y Supabase como base de datos.
 | Sin login | Login con correo y contrasena |
 | `sw.js` escrito a mano | `vite-plugin-pwa` (Workbox), con aviso de version nueva |
 | Sin validacion | Validacion en el cliente y CHECK constraints en la base |
-| Sin pruebas | 116 pruebas unitarias |
+| Sin pruebas | 122 pruebas unitarias |
 | Sin soportes | Comprobantes adjuntos y estado de cuenta en PDF |
 | Montos a pelo en un `type="number"` | Separacion de miles mientras se escribe |
 | Ocho tarjetas apiladas por persona | Resumen fijo + pestanas (Pagos, Periodos, PDF, Ajustes) |

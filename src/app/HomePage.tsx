@@ -153,7 +153,11 @@ export function HomePage({ user }: { user: User }) {
                   ))}
                 </div>
 
-                <Button variant="ghost" onClick={() => setCreating(true)}>
+                <Button
+                  variant="ghost"
+                  className={styles.addPerson}
+                  onClick={() => setCreating(true)}
+                >
                   + Persona
                 </Button>
               </div>
